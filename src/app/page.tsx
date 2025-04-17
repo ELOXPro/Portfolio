@@ -16,8 +16,7 @@ export default function Home() {
   return (
     <div className="flex h-[90%] pr-2 sm:pr-8 items-end justify-end text-xs sm:text-sm font-bold text-primary">
       <h1 className="w-[60%] sm:w-[20%] text-left text-balance">
-        At {age} years old, with {exp}+ years of experience, I am a Digital
-        Creator driven by innovation and a passion for new ideas. I embrace
+        At {age} years old, with {exp}+ years of experience, I am  driven by innovation and a passion for new ideas. I embrace
         challenges as opportunities, constantly exploring, building, and
         refining my craft. With a growth-oriented mindset, I push boundaries to
         create impactful solutions. Let’s connect.
