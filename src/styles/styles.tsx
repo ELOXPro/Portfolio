@@ -1,0 +1,1 @@
+export const iconStyle = "mt-4 h-6 w-6 fill-primary text-primary hover:text-foreground hover:fill-foreground duration-300"
