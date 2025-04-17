@@ -94,9 +94,10 @@ export const projectRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       if (input) {
         return ctx.db.project.findMany({
-          where: {category: input}
+          where: {category: input},
+          orderBy: { id: "desc" },
         });
       }
-      return ctx.db.project.findMany();
+      return ctx.db.project.findMany({ orderBy: { id: "desc" },});
     }),
 });

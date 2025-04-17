@@ -41,7 +41,7 @@ export default function Contact() {
   const handleSubmit = () => {
 
     if (!form.names || !form.email || !form.message) {
-      alert("Please fill in all fields");
+     toast.error("Please fill in all fields");
       return;
     }
 

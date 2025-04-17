@@ -101,12 +101,12 @@ export default function Projects() {
                 <p className="my-2 max-h-16 w-full overflow-y-scroll text-sm text-foreground scrollbar-hide">
                   {activeCard.description}
                 </p>
-                <div className="flex w-full items-center gap-1 overflow-hidden">
-                  <p className="text-xs font-bold text-foreground">ToolKit:</p>
+                <p className="text-xs font-bold text-foreground">ToolKit:</p>
+                <div className="flex flex-wrap items-center justify-start gap-1 overflow-auto">
                   {activeCard.tools.map((tool: string) => (
                     <div
                       key={tool}
-                      className="h-[14px] rounded-full bg-gradient-to-br from-secondary to-primary to-60% px-1 text-[10px] font-medium capitalize tracking-tighter text-background"
+                      className="flex w-max rounded-md bg-gradient-to-br from-secondary to-primary to-60% px-1 text-[10px] font-medium capitalize tracking-tighter text-background"
                     >
                       {tool}
                     </div>
