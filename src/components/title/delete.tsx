@@ -40,10 +40,16 @@ export function DeleteTitle() {
         </SelectContent>
       </Select>
 
-      {selectedId && (
+      <div className="mt-2 border-b border-primary w-full" />
+
+      {selectedId ? (
         <Button variant="destructive" onClick={() => deleteTitle.mutate(selectedId)}>
           Delete Title
         </Button>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a title to delete
+        </div>
       )}
     </div>
   );

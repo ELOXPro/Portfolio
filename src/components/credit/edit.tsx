@@ -77,14 +77,16 @@ export function EditCredit() {
         </SelectTrigger>
         <SelectContent>
           {credits.map((c) => (
-            <SelectItem key={c.id} value={c.id}>
+            <SelectItem className="capitalize" key={c.id} value={c.id}>
               {c.inspiration}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      {selected && (
+      <div className="mt-2 border-b border-primary w-full" />
+
+      {selected ? (
         <>
           <Input
             value={selected.inspiration}
@@ -105,6 +107,10 @@ export function EditCredit() {
             {loading ? "Updating..." : "Update Credit"}
           </Button>
         </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a credit to edit
+        </div>
       )}
     </div>
   );

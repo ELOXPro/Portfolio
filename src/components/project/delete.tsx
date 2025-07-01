@@ -64,21 +64,29 @@ export function DeleteProject() {
         </SelectTrigger>
         <SelectContent>
           {projects.map((project) => (
-            <SelectItem key={project.id} value={project.id}>
+            <SelectItem className="capitalize" key={project.id} value={project.id}>
               {project.name}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Button
-        onClick={handleDelete}
-        disabled={loading}
-        variant="destructive"
-        className="w-full"
-      >
-        {loading ? "Deleting..." : "Delete Project"}
-      </Button>
+      <div className="mt-2 border-b border-primary w-full" />
+
+      {selectedId ? (
+        <Button
+          onClick={handleDelete}
+          disabled={loading}
+          variant="destructive"
+          className="w-full"
+        >
+          {loading ? "Deleting..." : "Delete Project"}
+        </Button>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a project to delete
+        </div>
+      )}
     </div>
   );
 }

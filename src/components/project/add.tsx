@@ -118,7 +118,7 @@ export function AddProject() {
         </SelectTrigger>
         <SelectContent>
           {titles?.map((title) => (
-            <SelectItem key={title.id} value={title.id}>
+            <SelectItem className="capitalize" key={title.id} value={title.id}>
               {title.name}
             </SelectItem>
           ))}

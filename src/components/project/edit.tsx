@@ -106,7 +106,7 @@ export function EditProject() {
         <SelectTrigger>
           <SelectValue placeholder="Select a Project" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="capitalize">
           {projects.map((project) => (
             <SelectItem key={project.id} value={project.id}>
               {project.name}
@@ -114,6 +114,7 @@ export function EditProject() {
           ))}
         </SelectContent>
       </Select>
+      <div className="mt-2 border-b border-primary w-full" />
 
       {value ? (
         <>
@@ -145,7 +146,7 @@ export function EditProject() {
             </SelectTrigger>
             <SelectContent>
               {titles?.map((title) => (
-                <SelectItem key={title.id} value={title.id}>
+                <SelectItem className="capitalize" key={title.id} value={title.id}>
                   {title.name}
                 </SelectItem>
               ))}
@@ -257,7 +258,9 @@ export function EditProject() {
           </Button>
         </>
       ) : (
-        <div>Select a project to edit</div>
+        <div className="flex justify-center items-center h-full">
+          Select a project to edit
+        </div>
       )}
     </div>
   );

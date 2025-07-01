@@ -63,14 +63,16 @@ export function EditContact() {
         </SelectTrigger>
         <SelectContent>
           {contacts.map((c) => (
-            <SelectItem key={c.id} value={c.id}>
+            <SelectItem className="capitalize" key={c.id} value={c.id}>
               {c.title}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      {selected && (
+      <div className="mt-2 border-b border-primary w-full" />
+
+      {selected ? (
         <>
           <Input
             value={selected.title}
@@ -98,6 +100,10 @@ export function EditContact() {
             {loading ? "Updating..." : "Update Contact"}
           </Button>
         </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a contact to edit
+        </div>
       )}
     </div>
   );

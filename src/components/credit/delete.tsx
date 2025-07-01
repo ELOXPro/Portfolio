@@ -35,17 +35,21 @@ export function DeleteCredit() {
         </SelectTrigger>
         <SelectContent>
           {credits.map((c) => (
-            <SelectItem key={c.id} value={c.id}>
+            <SelectItem className="capitalize" key={c.id} value={c.id}>
               {c.inspiration}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      {selectedId && (
+      {selectedId ? (
         <Button variant="destructive" onClick={() => deleteCredit.mutate(selectedId)}>
           Delete Credit
         </Button>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a credit to delete
+        </div>
       )}
     </div>
   );

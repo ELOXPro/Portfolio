@@ -76,7 +76,9 @@ export function EditTitle() {
         </SelectContent>
       </Select>
 
-      {selected && (
+      <div className="mt-2 border-b border-primary w-full" />
+
+      {selected ? (
         <>
           <Input
             placeholder="New title name"
@@ -87,6 +89,10 @@ export function EditTitle() {
             {loading ? "Updating..." : "Update Title"}
           </Button>
         </>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a title to edit
+        </div>
       )}
     </div>
   );

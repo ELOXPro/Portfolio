@@ -39,17 +39,21 @@ export function DeleteContact() {
         </SelectTrigger>
         <SelectContent>
           {contacts.map((c) => (
-            <SelectItem key={c.id} value={c.id}>
+            <SelectItem className="capitalize" key={c.id} value={c.id}>
               {c.title}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      {selectedId && (
+      {selectedId ? (
         <Button variant="destructive" onClick={handleDelete}>
           Delete Contact
         </Button>
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          Select a contact to delete
+        </div>
       )}
     </div>
   );

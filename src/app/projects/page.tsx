@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { X, Star, Pointer } from "lucide-react";
+import { X, Star, Pointer, Loader2 } from "lucide-react";
 import { api } from "@/trpc/react";
 
 export type ProjectCardProps = {
@@ -14,13 +14,12 @@ export type ProjectCardProps = {
   description: string;
   url: string;
   tools: string[];
-  img: string | null ;
+  img: string | null;
 };
-
 
 export default function Projects() {
   const [titled, setTitle] = useState<string | undefined>();
-  const { data: projects } = api.project.list.useQuery(titled);
+  const { data: projects, isLoading } = api.project.list.useQuery(titled);
   const { data: titles = [] } = api.title.list.useQuery();
   const [activeCard, setActiveCard] = useState<ProjectCardProps | null>(null);
 
@@ -133,8 +132,8 @@ export default function Projects() {
       </AnimatePresence>
 
       {/* GRID  */}
-      <div className="flex w-[70%] h-[90%] flex-col gap-1 p-4">
-        <div className="w-full flex justify-start items-center gap-2 px-2 pt-2 text-xs sm:text-sm font-bold text-primary bg-background overflow-x-scroll scrollbar-hide">
+      <div className="mb-4 flex h-[90%] w-[70%] flex-col gap-1 p-4">
+        <div className="flex w-full items-center justify-start gap-2 overflow-x-scroll bg-background px-2 pt-2 text-xs font-bold text-primary scrollbar-hide sm:text-sm">
           <button
             className={`${titled === undefined ? "text-foreground" : ""} duration-300 hover:text-foreground`}
             onClick={() => setTitle(undefined)}
@@ -151,45 +150,50 @@ export default function Projects() {
             </button>
           ))}
         </div>
-        {rows.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className="flex flex-col gap-1 lg:flex-row"
-          >
-            {row.map((project) => {
-              const flexClass =
-                project.type === "highlight"
-                  ? "lg:flex-[2]"
-                  : "lg:flex-[1]";
+        {!isLoading ? (
+          rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="flex flex-col gap-1 lg:flex-row">
+              {row.map((project) => {
+                const flexClass =
+                  project.type === "highlight" ? "lg:flex-[2]" : "lg:flex-[1]";
 
-              return (
-                <motion.div
-                  key={project.id}
-                  layoutId={`card-${project.id}`}
-                  className={flexClass}
-                  onClick={() => setActiveCard(project)}
-                >
-                  <div
-                    className="relative h-56 w-full cursor-pointer border border-primary bg-cover bg-center fill-primary 
-                    tracking-tighter text-primary duration-300 hover:border-foreground hover:fill-foreground hover:tracking-widest hover:text-foreground"
-                    style={{
-                      backgroundImage: `url(${project.img})`,
-                    }}
+                return (
+                  <motion.div
+                    key={project.id}
+                    layoutId={`card-${project.id}`}
+                    className={flexClass}
+                    onClick={() => setActiveCard(project)}
                   >
-                    {project.type === "highlight" && (
-                      <div className="absolute right-2 top-2 z-10">
-                        <Star className="fill-inherit text-primary" size={16} />
-                      </div>
-                    )}
-                    <h1 className="flex w-full text-center h-full items-center justify-center bg-background/70 text-2xl font-bold capitalize backdrop-blur-sm">
-                      {project.name}
-                    </h1>
-                  </div>
-                </motion.div>
-              );
-            })}
+                    <div
+                      className="relative h-56 w-full cursor-pointer border border-primary bg-cover bg-center fill-primary 
+                    tracking-tighter text-primary duration-300 hover:border-foreground hover:fill-foreground hover:tracking-widest hover:text-foreground"
+                      style={{
+                        backgroundImage: `url(${project.img})`,
+                      }}
+                    >
+                      {project.type === "highlight" && (
+                        <div className="absolute right-2 top-2 z-10">
+                          <Star
+                            className="fill-inherit text-primary"
+                            size={16}
+                          />
+                        </div>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 h-full bg-gradient-to-tl from-background/50 to-transparent backdrop-blur-sm" />
+                      <h1 className="relative flex h-full w-full items-center justify-center text-center text-xl font-bold capitalize">
+                        {project.name}
+                      </h1>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ))
+        ) : (
+          <div className="flex min-h-[80vh] w-full items-center justify-center">
+            <Loader2 className="animate-spin text-primary" size={64} />
           </div>
-        ))}
+        )}
       </div>
     </>
   );

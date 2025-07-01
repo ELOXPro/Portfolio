@@ -115,7 +115,7 @@ export default function Contact() {
       <div className="mt-4 flex h-1/2 w-full flex-col justify-start text-primary">
         <div className="flex h-1/2 w-full flex-col items-end text-sm">
           <div className="font-black">Contacts:</div>
-          <div className="mt-2 grid w-1/2 grid-cols-2 items-end gap-1 overflow-y-scroll font-medium capitalize scrollbar-hide">
+          <div className="mt-2 grid w-full lg:w-1/2 grid-cols-1 lg:grid-cols-2 items-end gap-0.5 lg:gap-1 overflow-y-scroll font-medium capitalize scrollbar-hide">
             {info.map(
               (item, index) =>
                 item.type === "contact" && (
@@ -143,7 +143,7 @@ export default function Contact() {
         </div>
         <div className="flex h-1/2 w-full flex-col items-start text-sm">
           <div className="font-black">Socials:</div>
-          <div className="mt-2 grid w-1/2 grid-cols-3 justify-end gap-1 overflow-y-scroll font-medium capitalize scrollbar-hide">
+          <div className="my-2 grid w-full md:w-1/2 grid-cols-1 lg:grid-cols-3 justify-end gap-0.5 lg:gap-1 overflow-y-scroll font-medium capitalize scrollbar-hide">
             {info.map(
               (item, index) =>
                 item.type === "social" && (

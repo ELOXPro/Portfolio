@@ -114,7 +114,7 @@ export default function AdminPortal() {
   }
 
   return (
-    <div className="flex w-[65%] h-screen pr-8 flex-col items-center justify-center">
+    <div className="flex w-[65%] h-screen flex-col items-center justify-center">
       <div className="flex flex-col gap-2 border border-primary p-4">
         <div className="flex w-full items-center justify-center gap-1">
           <h1 className="w-4/5 border-b border-inherit text-center text-xl font-bold">
