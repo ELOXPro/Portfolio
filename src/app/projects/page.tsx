@@ -19,7 +19,11 @@ export type ProjectCardProps = {
 
 export default function Projects() {
   const [titled, setTitle] = useState<string | undefined>();
-  const { data: projects, isLoading } = api.project.list.useQuery(titled);
+  const [featured, setFeatured] = useState(false);
+  const { data: projects, isLoading } = api.project.list.useQuery({
+    titled,
+    featured,
+  });
   const { data: titles = [] } = api.title.list.useQuery();
   const [activeCard, setActiveCard] = useState<ProjectCardProps | null>(null);
 
@@ -135,11 +139,19 @@ export default function Projects() {
       <div className="mb-4 flex h-[90%] w-[70%] flex-col gap-1 p-4">
         <div className="flex w-full items-center justify-start gap-2 overflow-x-scroll bg-background px-2 pt-2 text-xs font-bold text-primary scrollbar-hide sm:text-sm">
           <button
+            className={`${featured ? "bg-secondary hover:bg-primary" : ""} rounded-full bg-primary px-2 py-1 text-xs font-bold text-foreground duration-300 hover:bg-secondary`}
+            onClick={() => setFeatured(!featured)}
+          >
+            {featured ? "Featured" : "All Projects"}
+          </button>
+          <p>||</p>
+          <button
             className={`${titled === undefined ? "text-foreground" : ""} duration-300 hover:text-foreground`}
             onClick={() => setTitle(undefined)}
           >
             All
           </button>
+
           {titles.map((title, index) => (
             <button
               key={index}
@@ -151,44 +163,50 @@ export default function Projects() {
           ))}
         </div>
         {!isLoading ? (
-          rows.map((row, rowIndex) => (
-            <div key={rowIndex} className="flex flex-col gap-1 lg:flex-row">
-              {row.map((project) => {
-                const flexClass =
-                  project.type === "highlight" ? "lg:flex-[2]" : "lg:flex-[1]";
+          rows && rows.length > 0 ? (
+            rows.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex flex-col gap-1 lg:flex-row">
+                {row.map((project) => {
+                  const flexClass =
+                    project.type === "highlight"
+                      ? "lg:flex-[2]"
+                      : "lg:flex-[1]";
 
-                return (
-                  <motion.div
-                    key={project.id}
-                    layoutId={`card-${project.id}`}
-                    className={flexClass}
-                    onClick={() => setActiveCard(project)}
-                  >
-                    <div
-                      className="relative h-56 w-full cursor-pointer border border-primary bg-cover bg-center fill-primary 
-                    tracking-tighter text-primary duration-300 hover:border-foreground hover:fill-foreground hover:tracking-widest hover:text-foreground"
-                      style={{
-                        backgroundImage: `url(${project.img})`,
-                      }}
+                  return (
+                    <motion.div
+                      key={project.id}
+                      layoutId={`card-${project.id}`}
+                      className={flexClass}
+                      onClick={() => setActiveCard(project)}
                     >
-                      {project.type === "highlight" && (
-                        <div className="absolute right-2 top-2 z-10">
-                          <Star
-                            className="fill-inherit text-primary"
-                            size={16}
-                          />
-                        </div>
-                      )}
-                      <div className="absolute bottom-0 left-0 right-0 h-full bg-gradient-to-tl from-background/50 to-transparent backdrop-blur-sm" />
-                      <h1 className="relative flex h-full w-full items-center justify-center text-center text-xl font-bold capitalize">
-                        {project.name}
-                      </h1>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          ))
+                      <div
+                        className="relative h-56 w-full cursor-pointer border border-primary bg-cover bg-center fill-primary 
+                    tracking-tighter text-primary duration-300 hover:border-foreground hover:fill-foreground hover:tracking-widest hover:text-foreground"
+                        style={{
+                          backgroundImage: `url(${project.img})`,
+                        }}
+                      >
+                        {project.type === "highlight" && (
+                          <div className="absolute right-2 top-2 z-10">
+                            <Star
+                              className="fill-inherit text-primary"
+                              size={16}
+                            />
+                          </div>
+                        )}
+                        <div className="absolute bottom-0 left-0 right-0 h-full bg-gradient-to-tl from-background/50 to-transparent backdrop-blur-sm" />
+                        <h1 className="relative flex h-full w-full items-center justify-center text-center text-xl font-bold capitalize">
+                          {project.name}
+                        </h1>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ))
+          ) : (
+            <p className="flex h-[80vh] w-full font-bold text-primary justify-center items-center text-2xl"> No Projects Found</p>
+          )
         ) : (
           <div className="flex min-h-[80vh] w-full items-center justify-center">
             <Loader2 className="animate-spin text-primary" size={64} />

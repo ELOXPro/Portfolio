@@ -90,14 +90,30 @@ export const projectRouter = createTRPCRouter({
     }),
 
   list: publicProcedure
-    .input(z.string().optional())
+    .input(
+      z.object({
+        titled: z.string().optional(),
+        featured: z.boolean(),
+      }),
+    )
     .query(async ({ ctx, input }) => {
-      if (input) {
+      if (input && !input.featured) {
         return ctx.db.project.findMany({
-          where: {category: input},
+          where: {
+            category: input.titled,
+          },
           orderBy: { id: "desc" },
         });
       }
-      return ctx.db.project.findMany({ orderBy: { id: "desc" },});
+      else if (input && input.featured) {
+        return ctx.db.project.findMany({
+          where: {
+            category: input.titled,
+            type: "highlight",
+          },
+          orderBy: { id: "desc" },
+        });
+      }
+      return ctx.db.project.findMany({ orderBy: { id: "desc" } });
     }),
 });
