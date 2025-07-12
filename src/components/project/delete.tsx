@@ -66,8 +66,7 @@ export function DeleteProject() {
           <SelectValue placeholder="Select a Project to Delete" />
         </SelectTrigger>
         <SelectContent>
-          {projects &&
-            projects.map((project) => (
+          {projects?.map((project) => (
               <SelectItem
                 className="capitalize"
                 key={project.id}

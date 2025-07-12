@@ -105,7 +105,7 @@ export const projectRouter = createTRPCRouter({
           orderBy: { id: "desc" },
         });
       }
-      else if (input && input.featured) {
+      else if (input?.featured) {
         return ctx.db.project.findMany({
           where: {
             category: input.titled,

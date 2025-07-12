@@ -25,8 +25,10 @@ export function EditProject() {
   const [value, setValue] = useState<ProjectCardProps | null>(null);
   const [toolInput, setToolInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const { data: projects } = api.project.list.useQuery({
+    featured: false,
+  });
 
-  const { data: projects = [] } = api.project.list.useQuery();
   const { data: titles } = api.title.list.useQuery();
 
   const editProject = api.project.edit.useMutation({
@@ -99,7 +101,7 @@ export function EditProject() {
 
       <Select
         onValueChange={(projectId) => {
-          const selected = projects.find((p) => p.id === projectId);
+          const selected = projects?.find((p) => p.id === projectId);
           if (selected) setValue(selected as ProjectCardProps);
         }}
       >
@@ -107,7 +109,7 @@ export function EditProject() {
           <SelectValue placeholder="Select a Project" />
         </SelectTrigger>
         <SelectContent className="capitalize">
-          {projects.map((project) => (
+          {projects?.map((project) => (
             <SelectItem key={project.id} value={project.id}>
               {project.name}
             </SelectItem>
