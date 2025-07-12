@@ -16,8 +16,9 @@ export function DeleteProject() {
   const utils = api.useUtils();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const { data: projects = [] } = api.project.list.useQuery();
+  const { data: projects } = api.project.list.useQuery({
+    featured: false,
+  });
 
   const deleteProject = api.project.delete.useMutation({
     onSuccess: (data) => {
@@ -44,7 +45,9 @@ export function DeleteProject() {
       return;
     }
 
-    const confirmDelete = confirm("Are you sure you want to delete this project?");
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this project?",
+    );
     if (!confirmDelete) return;
 
     setLoading(true);
@@ -63,15 +66,20 @@ export function DeleteProject() {
           <SelectValue placeholder="Select a Project to Delete" />
         </SelectTrigger>
         <SelectContent>
-          {projects.map((project) => (
-            <SelectItem className="capitalize" key={project.id} value={project.id}>
-              {project.name}
-            </SelectItem>
-          ))}
+          {projects &&
+            projects.map((project) => (
+              <SelectItem
+                className="capitalize"
+                key={project.id}
+                value={project.id}
+              >
+                {project.name}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
 
-      <div className="mt-2 border-b border-primary w-full" />
+      <div className="mt-2 w-full border-b border-primary" />
 
       {selectedId ? (
         <Button
@@ -83,7 +91,7 @@ export function DeleteProject() {
           {loading ? "Deleting..." : "Delete Project"}
         </Button>
       ) : (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex h-full items-center justify-center">
           Select a project to delete
         </div>
       )}
