@@ -1,5 +1,5 @@
 export default function Home() {
-  const today = new Date();
+  let today = new Date();
   const birthDate = new Date(2004, 11, 23);
   const StartDate = new Date(2023, 7, 1);
   let age = today.getFullYear() - birthDate.getFullYear();
