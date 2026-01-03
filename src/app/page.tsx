@@ -1,10 +1,14 @@
+export const dynamic = "force-dynamic";
+
 export default function Home() {
-  let today = new Date();
+  const today = new Date();
   const birthDate = new Date(2004, 11, 23);
-  const StartDate = new Date(2023, 7, 1);
+  const startDate = new Date(2023, 7, 1);
+
   let age = today.getFullYear() - birthDate.getFullYear();
-  let exp = today.getFullYear() - StartDate.getFullYear();
- const monthDifference = today.getMonth() - birthDate.getMonth();
+  const exp = today.getFullYear() - startDate.getFullYear();
+
+  const monthDifference = today.getMonth() - birthDate.getMonth();
 
   if (
     monthDifference < 0 ||
