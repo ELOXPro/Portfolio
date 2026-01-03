@@ -14,6 +14,7 @@ import { iconStyle } from "@/styles/styles";
 import { ShieldUser } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { Titles } from "@/components/titles";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,8 +31,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
-  const date = new Date().getFullYear();
+  }) {
   const pages = ["home", "projects", "contact", "credits", "resume"];
 
   return (
@@ -46,8 +46,8 @@ export default function RootLayout({
                 <div className="max-w-screen flex h-screen min-h-screen w-full overflow-hidden">
                   {/* Name & Titles */}
                   <div
-                    className="absolute z-20 flex w-full flex-col gap-1 pl-2 pt-2 sm:w-[30%] sm:gap-2
-                    sm:pl-8 sm:pt-8"
+                    className="absolute z-20 flex w-full flex-col gap-1 border-b border-primary py-2 pl-2 backdrop-blur-2xl sm:w-[30%] sm:gap-2 sm:border-none sm:pl-8
+                    sm:pt-8 sm:backdrop-blur-none"
                   >
                     <div
                       className="bg-gradient-to-tr from-secondary to-primary to-60% 
@@ -59,33 +59,30 @@ export default function RootLayout({
                   </div>
                   {/* Side-Menu */}
                   <div
-                    className="absolute top-[20%] z-20 flex flex-col items-start justify-start gap-2 pl-2 sm:top-1/4 
+                    className="absolute top-[20%] z-20 flex flex-col items-start justify-between gap-2 pl-2 sm:top-1/4 
                     sm:pl-8"
                   >
-                    {pages.map((title, index) => (
-                      <NavButton
-                        key={index}
-                        title={title}
-                        variant={title === "resume" ? "secondary" : "primary"}
-                      />
-                    ))}
-                    <div className="flex flex-col gap-2 sm:flex-row">
-                      <ThemeToggle />
-                      <SparklesToggle />
-                      <Link href="/admin" className={iconStyle}>
-                        <ShieldUser />
-                      </Link>
-                    </div>
+                      {pages.map((title, index) => (
+                        <NavButton
+                          key={index}
+                          title={title}
+                          variant={title === "resume" ? "secondary" : "primary"}
+                        />
+                      ))}
+                      <div className="flex flex-row justify-between gap-2">
+                        <ThemeToggle />
+                        <SparklesToggle />
+                        <Link href="/admin" className={iconStyle}>
+                          <ShieldUser />
+                        </Link>
+                      </div>
                   </div>
-                  <div className="absolute flex w-full flex-col gap-10 "></div>
+                  <Footer />
 
                   {/* Main Content Area */}
-                  <div className="relative pt-20 sm:pt-0 min-h-full w-full overflow-y-scroll scrollbar-hide">
+                  <div className="relative min-h-full w-full overflow-y-scroll pt-20 scrollbar-hide sm:pt-0">
                     {children}
                   </div>
-                </div>
-                <div className="absolute bottom-0 w-full py-2 sm:py-4 text-center text-xs font-bold tracking-tighter text-primary">
-                  &copy; {date} Eloi Iradukunda, All Rights Reserved
                 </div>
               </main>
               <BackgroundSparkles />
