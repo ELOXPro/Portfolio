@@ -3,7 +3,7 @@ export default function Home() {
   const birthDate = new Date(2004, 11, 23);
   const StartDate = new Date(2023, 7, 1);
   let age = today.getFullYear() - birthDate.getFullYear();
-  const exp = today.getFullYear() - StartDate.getFullYear();
+  let exp = today.getFullYear() - StartDate.getFullYear();
  const monthDifference = today.getMonth() - birthDate.getMonth();
 
   if (
